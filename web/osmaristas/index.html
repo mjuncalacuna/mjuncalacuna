@@ -462,24 +462,36 @@ function applyLang(){
   render();
 }
 
-/* the sticky bar marks whichever section you are reading */
-let obs=null;
+/* la barra marca la sección que se está leyendo */
+let quitaSpy=null;
 function spy(){
-  if(obs) obs.disconnect();
-  const links = new Map([...document.querySelectorAll("#navbar a")].map(a=>[a.getAttribute("href").slice(1), a]));
-  obs = new IntersectionObserver(es=>{
-    es.forEach(e=>{
-      if(!e.isIntersecting) return;
-      links.forEach(a=>a.removeAttribute("aria-current"));
-      const a=links.get(e.target.id); if(!a) return;
-      a.setAttribute("aria-current","true");
-      /* solo mover la barra si el enlace se ha salido de la vista */
-      const nb=a.parentElement, r=a.getBoundingClientRect(), rb=nb.getBoundingClientRect();
-      if(r.left < rb.left + 8 || r.right > rb.right - 8)
-        nb.scrollTo({left: a.offsetLeft - 16, behavior:"smooth"});
-    });
-  }, {rootMargin:"-70px 0px -75% 0px"});
-  document.querySelectorAll(".sec").forEach(s=>obs.observe(s));
+  if(quitaSpy) quitaSpy();
+  const links = [...document.querySelectorAll("#navbar a")];
+  const secs  = links.map(a => document.getElementById(a.getAttribute("href").slice(1)));
+  let activo=null, pedido=false;
+
+  function marca(){
+    pedido=false;
+    /* la sección activa es la última cuyo título ya ha pasado bajo la barra */
+    const linea = $(".bar").getBoundingClientRect().bottom + 24;
+    let i=0;
+    secs.forEach((s,n)=>{ if(s && s.getBoundingClientRect().top <= linea) i=n; });
+    const a=links[i];
+    if(!a || a===activo) return;
+    activo=a;
+    links.forEach(l=>l.removeAttribute("aria-current"));
+    a.setAttribute("aria-current","true");
+    /* solo mover la barra si el enlace se ha salido de la vista */
+    const nb=a.parentElement, r=a.getBoundingClientRect(), rb=nb.getBoundingClientRect();
+    if(r.left < rb.left + 8 || r.right > rb.right - 8)
+      nb.scrollTo({left: a.offsetLeft - 16, behavior:"smooth"});
+  }
+  function pedir(){ if(!pedido){ pedido=true; requestAnimationFrame(marca); } }
+
+  addEventListener("scroll", pedir, {passive:true});
+  addEventListener("resize", pedir, {passive:true});
+  quitaSpy = () => { removeEventListener("scroll", pedir); removeEventListener("resize", pedir); };
+  marca();
 }
 
 /* ============================ detail sheet ============================ */
