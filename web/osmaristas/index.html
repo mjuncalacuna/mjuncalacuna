@@ -86,22 +86,21 @@ a{color:inherit; text-decoration:none}
 .flags button[aria-pressed="true"] svg{filter:none}
 .flags button:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
 .navbar{display:flex; align-items:stretch; gap:26px; overflow-x:auto; scrollbar-width:none;
-  margin-left:auto; min-width:0;
+  margin-left:auto; min-width:0; padding-right:26px;
   -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 26px),transparent 100%);
   mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 26px),transparent 100%)}
 .navbar::-webkit-scrollbar{display:none}
 .navbar a{position:relative; display:flex; align-items:center; white-space:nowrap;
   color:var(--faint); transition:color .16s ease}
+.navbar a[aria-current="true"]{color:var(--ink)}
 .navbar a:hover{color:var(--muted)}
-.navbar a::after{content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
-  background:transparent; transition:background .16s ease}
+.navbar a::after{content:""; position:absolute; left:0; right:0; bottom:0; height:3px;
+  border-radius:3px 3px 0 0; background:transparent; transition:background .16s ease}
 
 /* versalitas — más carta impresa que app */
 .navbar a{font-size:11.5px; font-weight:600; letter-spacing:.14em;
   text-transform:uppercase}
-.navbar a::after{height:3px}
-.navbar a[aria-current="true"]{color:var(--ink)}
-.navbar a[aria-current="true"]::after{background:var(--brand)}
+.navbar a[aria-current="true"]::after{background:var(--gold)}
 
 /* ---------- sections ---------- */
 .sec{padding-top:44px; scroll-margin-top:calc(var(--bar) + 8px)}
@@ -335,6 +334,13 @@ footer p{margin:0 0 8px; color:var(--muted); font-size:13px; max-width:56ch}
 
 <script>
 /* ============================ i18n ============================ */
+/* la barra es estrecha en un móvil: dos secciones llevan nombre corto
+   para que quepan más de un vistazo. El título de la sección no cambia. */
+const NAV_CORTO = {
+  cervezas:{ es:"Cervezas", gl:"Cervexas", en:"Beers" },
+  destilados:{ es:"Destilados", gl:"Destilados", en:"Spirits" }
+};
+
 const T = {
   es:{ tagline:"Cervecería · Tapería · Plaza de la Verdura, 5", taglineShort:"Cervecería · Tapería",
     award:"Guía 2026",
@@ -449,7 +455,8 @@ function section(c){
 function render(){
   const t=T[lang];
   $("#carta").innerHTML = MENU.map(section).join("");
-  $("#navbar").innerHTML = MENU.map(c=>`<a href="#s-${c.id}">${esc(c.name[lang])}</a>`).join("");
+  $("#navbar").innerHTML = MENU.map(c=>
+    `<a href="#s-${c.id}">${esc((NAV_CORTO[c.id] || c.name)[lang])}</a>`).join("");
   $("#legend-grid").innerHTML = Object.values(ALLERGENS).map(a=>
     `<div><svg aria-hidden="true"><use href="#${a.icon}"/></svg>${a[lang]}</div>`).join("");
   spy();
@@ -481,10 +488,13 @@ function spy(){
     activo=a;
     links.forEach(l=>l.removeAttribute("aria-current"));
     a.setAttribute("aria-current","true");
-    /* solo mover la barra si el enlace se ha salido de la vista */
+    /* solo mover la tira si el enlace activo se ha salido de la vista.
+       Se calcula con rectángulos y no con offsetLeft: la barra es sticky y
+       hace de offsetParent, así que offsetLeft incluía la marca del local. */
     const nb=a.parentElement, r=a.getBoundingClientRect(), rb=nb.getBoundingClientRect();
     if(r.left < rb.left + 8 || r.right > rb.right - 8)
-      nb.scrollTo({left: a.offsetLeft - 16, behavior:"smooth"});
+      nb.scrollTo({left: Math.max(0, nb.scrollLeft + (r.left - rb.left) - 16),
+                   behavior:"smooth"});
   }
   function pedir(){ if(!pedido){ pedido=true; requestAnimationFrame(marca); } }
 
