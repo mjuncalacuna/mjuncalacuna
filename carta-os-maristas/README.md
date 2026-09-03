@@ -1,54 +1,50 @@
 # Carta digital — Os Maristas
 
-Rediseño de la carta de **Os Maristas** (cervecería · tapería, Galicia), como
-alternativa a la versión servida hoy en `hosteleria.pide-lo.es`.
+Rediseño de la carta de **Os Maristas** (cervecería · tapería, Plaza de la
+Verdura, 5), como alternativa a la versión servida hoy en `hosteleria.pide-lo.es`.
 
-Es una única página estática: `index.html`. No tiene build, ni dependencias, ni
+Es una única página estática: `index.html`. Sin build, sin dependencias y sin
 llamadas a red salvo la hoja de estilos de Google Fonts. Se abre en el navegador
 tal cual o se sirve desde cualquier hosting estático.
 
+## Cómo está montada
+
+- **Una sola pantalla.** Las tapas se ven nada más entrar, sin navegar. Debajo
+  van postres, vinos, cervezas y refrescos, y vermut y destilados.
+- **Barra fija** con el idioma a la izquierda y las cinco secciones a la
+  derecha; marca sola la sección que estás leyendo y el salto es suave.
+- **Listado en una columna**: foto, nombre, precio, descripción, alérgenos y
+  «Ver más».
+- **Ficha de detalle** en hoja inferior, con la foto grande, el desglose de
+  elaboración o ingredientes y los alérgenos declarados.
+- **Alérgenos con icono y nombre** en el propio listado, más leyenda al pie.
+- **Español, galego e inglés**, con banderas grandes.
+
+## Datos
+
+Todo el contenido está en el bloque `const D` (productos) y `const MENU`
+(estructura de secciones y subsecciones), extraído de la carta del cliente:
+169 productos, 86 con foto y 90 con descripción.
+
+Las fotos son las del propio restaurante, recortadas y reconvertidas a WebP
+embebido en base64 (comida a 880 px, botellas a 340 px). La página no carga
+ninguna imagen externa.
+
 ## Qué corrige respecto a la carta actual
 
-- Nombre y precio viven en la misma ficha, en vez de en dos columnas que se
-  desalinean cuando el nombre ocupa varias líneas.
-- Desaparece el `0,00 €` que se colaba en el detalle del puerro.
-- Se arregla el texto de la ficha de quesos, que se partía a una palabra por línea.
-- Buscador por plato e ingrediente.
-- Filtros: Del mar · De la tierra · Vegetariano · Vegano.
-- Dos vistas: fichas con imagen y lista compacta.
-- Alérgenos con icono **y** nombre, más leyenda desplegable.
-- Español, galego e inglés de verdad, no sólo banderas.
-- Modo claro y oscuro, siguiendo la preferencia del sistema.
+- El `0,00 €` fantasma que aparece en once productos.
+- Una categoría entera sin nombre (`cat_144`, nueve platos).
+- Nombre y precio en la misma ficha, en vez de dos columnas que se desalinean
+  cuando el nombre ocupa varias líneas.
+- La carta de vinos, reordenada por tipo y luego por zona (Galicia → resto de
+  España → mundo) en vez de las cuatro secciones solapadas del original.
+- Erratas del origen: «uan textura cremosa», «depositos de inos», «Pnot Nor»,
+  «Nieepoort», «Scotch Wisky».
 
-## Imágenes
+## Pendiente (depende del cliente)
 
-La página no carga imágenes externas: todo va embebido en el HTML.
-
-- **Fotos reales** (tabla de quesos y tostas de anchoa): recuperadas de la carta
-  actual del restaurante, incrustadas como WebP en base64.
-- **Resto de platos**: ilustración generada en Canvas a partir de una
-  especificación por plato (`art`), y etiquetada como «Ilustración» en la ficha
-  para no dar a entender que es una foto del plato que se sirve.
-- El botón **«Probar con vuestras fotos»** del pie permite subir fotos y verlas
-  en su sitio. Se guardan en `localStorage`, sólo en ese dispositivo: sirve para
-  validar el diseño, no para publicar.
-
-Para fijar una foto definitiva basta con añadir su data URI a `PHOTOS` y apuntar
-el plato con `photo: "<clave>"`.
-
-## Datos de la carta
-
-Transcritos del menú publicado por el restaurante. No hay descripciones
-inventadas: los platos de los que sólo se conoce nombre y precio se muestran así,
-y sus alérgenos aparecen como «por confirmar» en lugar de deducirlos.
-
-Pendiente de recibir del restaurante:
-
-- Fotos de los platos.
-- Las secciones que faltan: raciones, bebidas, vinos, postres.
-- Descripción y alérgenos de las 15 tapas que hoy sólo tienen nombre y precio.
-- Nombre completo y precio de los canelones de rabo de vaca.
-
-Dos cosas a verificar en el original: el precio del Zaalouk (15,00 €, fuera de
-rango respecto al resto de tapas) y un hueco en blanco tras los mejillones, que
-parece un plato sin nombre.
+- 70 bebidas sin ficha: los últimos tintos, cervezas, refrescos y destilados
+  salen con nombre y precio solamente.
+- Las descripciones están en español también en galego e inglés.
+- 13 vinos sin foto de botella en el gestor del cliente.
+- Destilados: tres columnas de precio sin etiquetar en el origen.
