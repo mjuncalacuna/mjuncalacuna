@@ -177,6 +177,16 @@ a{color:inherit; text-decoration:none}
 .sheet-scroll::-webkit-scrollbar{width:6px}
 .sheet-scroll::-webkit-scrollbar-track{background:transparent}
 .sheet-scroll::-webkit-scrollbar-thumb{background:var(--line); border-radius:99px}
+/* tirador: dice que la ficha se puede arrastrar hacia abajo.
+   Estrecho y centrado, para no taparle el sitio al aspa. */
+.grab{position:absolute; z-index:3; top:0; left:50%; transform:translateX(-50%);
+  width:120px; height:28px; display:flex; align-items:center; justify-content:center;
+  touch-action:none}
+.grab::before{content:""; width:38px; height:4px; border-radius:99px;
+  background:rgba(240,234,220,.5); box-shadow:0 1px 6px rgba(0,0,0,.55)}
+.sheet.sin-foto .sheet-body{padding-top:30px}
+@media(min-width:720px){ .grab{display:none} .sheet.sin-foto .sheet-body{padding-top:22px} }
+
 /* a soft fade says «hay más abajo» without a bar cutting the corner */
 .sheet::after{content:""; position:absolute; inset:auto 0 0 0; height:52px; pointer-events:none;
   background:linear-gradient(to top, var(--surface), transparent)}
@@ -524,7 +534,8 @@ function openSheet(id){
     ? `<div class="sheet-art${esPlato?"":" bottle"}"><img src="${it.img}" alt="">
          <button class="sheet-close" id="x" aria-label="Cerrar"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>`
     : "";
-  sheet.innerHTML = `<div class="sheet-scroll">` + cabecera + `
+  sheet.classList.toggle("sin-foto", !it.img);
+  sheet.innerHTML = `<div class="grab" aria-hidden="true"></div><div class="sheet-scroll">` + cabecera + `
     <div class="sheet-body">
       <div class="sheet-head"><h3 id="sheet-title">${esc(nm(it,lang))}</h3>
         <span class="sheet-price">${it.p.map(v=>`<b>${price(v)}</b>`).join("")}</span>
@@ -537,14 +548,69 @@ function openSheet(id){
           : `<p class="aller-warn">${t.noAller}</p>` }</div>` : "" }
     </div></div>`;
   lastFocus=document.activeElement;
+  sheet.style.transition=""; sheet.style.transform=""; backdrop.style.opacity="";
   sheet.hidden=false; backdrop.hidden=false; document.body.style.overflow="hidden";
   sheet.querySelector(".sheet-scroll").scrollTop=0;
   sheet.querySelector("#x").focus();
 }
 function closeSheet(){
-  sheet.hidden=true; backdrop.hidden=true; sheet.innerHTML=""; document.body.style.overflow="";
+  sheet.hidden=true; backdrop.hidden=true; sheet.innerHTML="";
+  sheet.style.transition=""; sheet.style.transform=""; backdrop.style.opacity="";
+  document.body.style.overflow="";
   if(lastFocus) lastFocus.focus();
 }
+
+/* ============ arrastrar la ficha hacia abajo para cerrarla ============ */
+function deslizable(){
+  let y0=0, dy=0, t0=0, activo=false, decidido=false, cerrando=false;
+  const hoja = () => matchMedia("(min-width:720px)").matches;   /* en escritorio es un diálogo centrado */
+
+  function empieza(e){
+    if(hoja() || cerrando || e.touches.length!==1) return;
+    const sc = sheet.querySelector(".sheet-scroll");
+    /* desde el tirador siempre; desde el cuerpo solo si no queda nada que subir */
+    if(!e.target.closest(".grab") && sc && sc.scrollTop > 0) return;
+    y0=e.touches[0].clientY; dy=0; t0=Date.now(); activo=true; decidido=false;
+    sheet.style.transition="none";
+  }
+  function mueve(e){
+    if(!activo) return;
+    const d = e.touches[0].clientY - y0;
+    if(!decidido){
+      if(Math.abs(d) < 6) return;
+      decidido = true;
+      if(d < 0){ activo=false; sheet.style.transition=""; return; }  /* sube: es scroll */
+    }
+    dy = Math.max(0, d);
+    e.preventDefault();
+    sheet.style.transform = `translateY(${dy}px)`;
+    backdrop.style.opacity = String(Math.max(0, 1 - dy/420));
+  }
+  function suelta(){
+    if(!activo) return;
+    activo=false;
+    /* cierra si se ha arrastrado bastante, o con un golpe rápido y corto */
+    const v = dy / Math.max(1, Date.now()-t0);          /* px por milisegundo */
+    sheet.style.transition = "transform .22s cubic-bezier(.3,.8,.4,1)";
+    if(dy > 110 || (dy > 55 && v > 0.5)) cierraDeslizando();
+    else { sheet.style.transform=""; backdrop.style.opacity=""; }
+  }
+  function cierraDeslizando(){
+    cerrando=true;
+    sheet.style.transform="translateY(100%)";
+    backdrop.style.opacity="0";
+    let hecho=false;
+    const fin=()=>{ if(hecho) return; hecho=true; cerrando=false;
+      sheet.removeEventListener("transitionend", fin); closeSheet(); };
+    sheet.addEventListener("transitionend", fin);
+    setTimeout(fin, 320);
+  }
+  sheet.addEventListener("touchstart", empieza, {passive:true});
+  sheet.addEventListener("touchmove",  mueve,   {passive:false});
+  sheet.addEventListener("touchend",   suelta);
+  sheet.addEventListener("touchcancel",suelta);
+}
+deslizable();
 
 /* ============================ events ============================ */
 document.addEventListener("click", e=>{
