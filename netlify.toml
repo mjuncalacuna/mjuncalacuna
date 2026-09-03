@@ -1,7 +1,6 @@
 # El sitio publica el directorio web/: la portada y una carpeta por trabajo.
 [build]
   publish = "web"
-  command = ""
 
 [[headers]]
   for = "/*"
