@@ -38,7 +38,7 @@ a{color:inherit; text-decoration:none}
 
 /* ---------- hero ---------- */
 .hero{position:relative; overflow:hidden; background:#0B0F09}
-.hero img{width:100%; height:clamp(170px,30vw,260px); object-fit:cover; opacity:.55}
+.hero img{width:100%; height:clamp(215px,33vw,300px); object-fit:cover; opacity:.55}
 .hero-veil{position:absolute; inset:0;
   background:linear-gradient(178deg, rgba(6,9,5,.4) 0%, rgba(6,9,5,.12) 34%, rgba(6,9,5,.9) 88%, var(--bg) 100%)}
 .hero-body{position:absolute; inset:auto 0 0 0; padding-bottom:18px}
@@ -49,6 +49,14 @@ a{color:inherit; text-decoration:none}
 .mark{font-family:var(--display); font-weight:var(--display-w); font-size:clamp(36px,9.5vw,62px);
   line-height:.94; letter-spacing:var(--display-ls); margin:.1em 0 0; color:#F4EEE0;
   text-shadow:0 2px 22px rgba(0,0,0,.55)}
+/* distinción: mención tipográfica, sin reproducir la marca de Michelin */
+.award{display:inline-flex; align-items:center; gap:8px; margin:12px 0 0;
+  padding:5px 13px 5px 11px; border:1px solid rgba(240,234,220,.24); border-radius:999px;
+  background:rgba(8,11,7,.42); backdrop-filter:blur(6px);
+  font-size:10.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+  color:#EFE7D6}
+.award::before{content:""; width:6px; height:6px; border-radius:50%;
+  background:#C8102E; flex:none}
 
 /* ---------- sticky bar ---------- */
 .bar{position:sticky; top:0; z-index:40; background:rgba(17,21,15,.94); backdrop-filter:blur(10px);
@@ -287,6 +295,7 @@ footer p{margin:0 0 8px; color:var(--muted); font-size:13px; max-width:56ch}
     <svg class="logo" viewBox="0 0 240 214" role="img" aria-label="Os Maristas"><use href="#logo"/></svg>
     <p class="eyebrow" data-t="tagline">Cervecería · Tapería · Plaza de la Verdura, 5</p>
     <h1 class="mark">Os Maristas</h1>
+    <p class="award"><span data-t="award">Guía MICHELIN 2026</span></p>
   </div></div>
 </header>
 
@@ -325,6 +334,7 @@ footer p{margin:0 0 8px; color:var(--muted); font-size:13px; max-width:56ch}
 /* ============================ i18n ============================ */
 const T = {
   es:{ tagline:"Cervecería · Tapería · Plaza de la Verdura, 5", taglineShort:"Cervecería · Tapería",
+    award:"Guía MICHELIN 2026",
     footNote:"Los precios incluyen IVA. Si tienes alergia o intolerancia, dínoslo antes de pedir.",
     legendTitle:"Alérgenos",
     legendFoot:"Solo aparecen los alérgenos que la cocina ha declarado plato a plato. Si un plato no los lleva marcados, pregúntanos en sala antes de pedir.",
@@ -333,6 +343,7 @@ const T = {
     noAller:"La cocina aún no ha declarado los alérgenos de este plato. Pregúntanos en sala antes de pedir.",
     veg:"Vegetariano", vegan:"Vegano" },
   gl:{ tagline:"Cervexaría · Tapería · Praza da Verdura, 5", taglineShort:"Cervexaría · Tapería",
+    award:"Guía MICHELIN 2026",
     footNote:"Os prezos inclúen IVE. Se tes alerxia ou intolerancia, dinolo antes de pedir.",
     legendTitle:"Alérxenos",
     legendFoot:"Só amosamos os alérxenos que a cociña declarou prato a prato. Se un prato non os leva marcados, pregúntanos na sala antes de pedir.",
@@ -341,6 +352,7 @@ const T = {
     noAller:"A cociña aínda non declarou os alérxenos deste prato. Pregúntanos na sala antes de pedir.",
     veg:"Vexetariano", vegan:"Vegano" },
   en:{ tagline:"Beer house · Tapas · Plaza de la Verdura, 5", taglineShort:"Beer house · Tapas",
+    award:"MICHELIN Guide 2026",
     footNote:"Prices include VAT. If you have an allergy or intolerance, tell us before ordering.",
     legendTitle:"Allergens",
     legendFoot:"Only allergens the kitchen has declared dish by dish are shown. If a dish has none marked, please ask us before ordering.",
