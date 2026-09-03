@@ -2,15 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Manuel Juncal — Trabajos</title>
-<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Manuel Juncal</title>
+<meta name="theme-color" content="#11150F">
+<meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Marcellus&display=swap">
 <style>
 :root{
-  --bg:#11150F; --surface:#181E16; --line:#2E382B;
+  --bg:#11150F; --line:#2E382B;
   --ink:#F0EADC; --muted:#B7C0AF; --faint:#8E9986; --gold:#E3A64F;
   color-scheme:dark;
 }
@@ -18,51 +19,24 @@
 body{margin:0; background:var(--bg); color:var(--ink);
   font-family:Archivo,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased;
-  display:flex; align-items:center; min-height:100vh}
-.wrap{width:100%; max-width:620px; margin:0 auto; padding:56px 22px}
-.eyebrow{font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold)}
-h1{font-family:Marcellus,Georgia,serif; font-weight:400; letter-spacing:.015em;
-  font-size:clamp(30px,7vw,42px); line-height:1.1; margin:10px 0 8px}
-.sub{color:var(--muted); margin:0 0 34px; max-width:44ch}
-.card{display:flex; align-items:center; gap:16px; padding:18px 20px;
-  background:var(--surface); border:1px solid var(--line); border-radius:12px;
-  color:inherit; text-decoration:none;
-  transition:border-color .18s ease, transform .18s ease}
-.card:hover{border-color:var(--gold); transform:translateY(-1px)}
-.card svg{width:36px; height:36px; flex:none; color:var(--gold)}
-.card .t{font-family:Marcellus,Georgia,serif; font-size:19px; letter-spacing:.015em; display:block}
-.card .d{color:var(--faint); font-size:13.5px}
-.card .go{margin-left:auto; color:var(--faint); font-size:20px; line-height:1}
-footer{margin-top:36px; color:var(--faint); font-size:13px}
-footer a{color:var(--muted)}
-@media(prefers-reduced-motion:reduce){ .card{transition:none} }
+  display:flex; align-items:center; justify-content:center; min-height:100vh}
+main{padding:40px 24px; text-align:center; max-width:420px}
+.eyebrow{font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--gold)}
+h1{font-family:Marcellus,Georgia,serif; font-weight:400; letter-spacing:.02em;
+  font-size:clamp(30px,8vw,40px); line-height:1.1; margin:12px 0 0}
+.rule{width:34px; height:1px; background:var(--line); margin:22px auto}
+p{color:var(--faint); margin:0}
+a{color:var(--muted); text-decoration:none; border-bottom:1px solid var(--line);
+  padding-bottom:1px; transition:color .16s ease, border-color .16s ease}
+a:hover{color:var(--gold); border-color:var(--gold)}
 </style>
 </head>
 <body>
-<main class="wrap">
+<main>
   <span class="eyebrow">Frontend</span>
   <h1>Manuel Juncal</h1>
-  <p class="sub">Propuestas y prototipos. Cada enlace es una maqueta funcional, no una imagen.</p>
-
-  <a class="card" href="/osmaristas/">
-    <svg viewBox="0 0 240 214" aria-hidden="true">
-      <g fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M62 44c0-11-11-15-15-6"/><path d="M178 44c0-11 11-15 15-6"/>
-        <path d="M62 44v122"/><path d="M178 44v122"/>
-        <path d="M34 180c11 0 22-4 28-14 6 10 17 14 28 14"/>
-        <path d="M206 180c-11 0-22-4-28-14-6 10-17 14-28 14"/>
-        <path d="M62 44l58 134 58-134"/><path d="M62 86h116"/>
-      </g>
-      <circle cx="80" cy="62" r="5" fill="currentColor"/>
-    </svg>
-    <span>
-      <span class="t">Os Maristas</span>
-      <span class="d">Carta digital · tres idiomas · alérgenos</span>
-    </span>
-    <span class="go" aria-hidden="true">→</span>
-  </a>
-
-  <footer><a href="mailto:manueljuncalacuna@gmail.com">manueljuncalacuna@gmail.com</a></footer>
+  <div class="rule"></div>
+  <p><a href="mailto:manueljuncalacuna@gmail.com">manueljuncalacuna@gmail.com</a></p>
 </main>
 </body>
 </html>

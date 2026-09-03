@@ -12,12 +12,15 @@ web/
 
 El nombre de la carpeta es la URL: en minúsculas, sin acentos y con guiones.
 
+La portada no enlaza ninguna propuesta a propósito: solo lleva tu nombre y tu
+correo. Cada cliente ve su URL y nada más, y quien llegue a la raíz no se
+entera de a quién más le has presentado algo. Netlify no lista directorios, así
+que las carpetas tampoco se pueden husmear; una ruta que no exista da 404.
+
 ## Añadir un restaurante
 
 1. Crea `web/<slug>/index.html` con la propuesta.
-2. Añade su tarjeta en `web/index.html`, o no la añadas si prefieres que esa
-   propuesta solo la vea quien tenga el enlace.
-3. `git push`. Si el repo está enlazado con Netlify, se publica solo; si no,
+2. `git push`. Si el repo está enlazado con Netlify, se publica solo; si no,
    arrastra el contenido de `web/` a la pestaña Deploys del proyecto.
 
 ## El documento tiene que estar completo
