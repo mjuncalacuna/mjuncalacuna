@@ -3,7 +3,7 @@
 Rediseño de la carta de **Os Maristas** (cervecería · tapería, Plaza de la
 Verdura, 5), como alternativa a la versión servida hoy en `hosteleria.pide-lo.es`.
 
-Es una única página estática: `index.html`. Sin build, sin dependencias y sin
+Es una única página estática: `web/osmaristas/index.html`. Sin build, sin dependencias y sin
 llamadas a red salvo la hoja de estilos de Google Fonts. Se abre en el navegador
 tal cual o se sirve desde cualquier hosting estático.
 
@@ -40,6 +40,12 @@ ninguna imagen externa.
   España → mundo) en vez de las cuatro secciones solapadas del original.
 - Erratas del origen: «uan textura cremosa», «depositos de inos», «Pnot Nor»,
   «Nieepoort», «Scotch Wisky».
+
+## Publicación
+
+El sitio de Netlify `manueljuncal` publica el directorio `web/`, según
+`netlify.toml`. La portada vive en `web/index.html` y cada trabajo en su propia
+carpeta, de modo que la carta queda en `manueljuncal.netlify.app/osmaristas`.
 
 ## Pendiente (depende del cliente)
 

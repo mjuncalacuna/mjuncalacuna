@@ -1,6 +1,6 @@
-# Publica solo la carta digital; el resto del repo es el perfil de GitHub.
+# El sitio publica el directorio web/: la portada y una carpeta por trabajo.
 [build]
-  publish = "carta-os-maristas"
+  publish = "web"
   command = ""
 
 [[headers]]
@@ -10,6 +10,6 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
 [[headers]]
-  for = "/index.html"
+  for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
