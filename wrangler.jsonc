@@ -1,0 +1,7 @@
+{
+  // Despliegue en Cloudflare Workers con assets estáticos: `npx wrangler deploy`.
+  // El directorio web/ es la raíz del sitio, igual que en netlify.toml.
+  "name": "manueljuncal",
+  "compatibility_date": "2026-09-03",
+  "assets": { "directory": "./web" }
+}
