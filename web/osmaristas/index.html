@@ -9,7 +9,7 @@
 <title>Os Maristas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Marcellus&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Marcellus&family=Poppins:wght@700&display=swap">
 <style>
 :root{
   --bg:#11150F; --surface:#181E16; --surface-2:#212A1F;
@@ -17,7 +17,8 @@
   --ink:#F0EADC; --muted:#B7C0AF; --faint:#8E9986;
   --gold:#E3A64F; --moss:#93B36C; --rust:#CE7051; --brand:#77A85F;
   --radius:12px; --bar:60px;
-  --serif:Fraunces,Georgia,serif;      /* nombres de plato, precios */
+  --serif:Fraunces,Georgia,serif;      /* nombres de plato */
+  --num:Poppins,"Helvetica Neue",Arial,sans-serif;  /* precios */
   --display:Marcellus,Georgia,serif;   /* marca y títulos de sección */
   --display-w:400; --display-ls:.015em;
 }
@@ -99,8 +100,8 @@ a{color:inherit; text-decoration:none}
 .dish .top{display:flex; gap:16px; align-items:baseline}
 .dish .h3{display:block; font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.22;
   margin:0; flex:1 1 auto; letter-spacing:-.01em; text-wrap:balance}
-.dish .price{font-family:var(--serif); font-weight:600; font-size:18px; color:var(--gold);
-  white-space:nowrap; font-variant-numeric:tabular-nums}
+.dish .price{font-family:var(--num); font-weight:700; font-size:17px; color:var(--gold);
+  letter-spacing:-.015em; white-space:nowrap; font-variant-numeric:tabular-nums}
 .dish .p{display:block; margin:0; font-size:14.5px; line-height:1.58; color:var(--muted);
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden}
 .dish .foot{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:auto; padding-top:8px}
@@ -137,8 +138,8 @@ a{color:inherit; text-decoration:none}
 .line .lnote{color:var(--faint); font-size:12.5px; margin-left:6px}
 .line .dots{flex:1 1 auto; min-width:14px; border-bottom:1px dotted var(--line); transform:translateY(-4px)}
 .line .lp{display:flex; gap:14px; flex:none}
-.line .lp b{font-family:var(--serif); font-weight:600; font-size:14.5px; color:var(--gold);
-  font-variant-numeric:tabular-nums; min-width:58px; text-align:right}
+.line .lp b{font-family:var(--num); font-weight:700; font-size:14px; color:var(--gold);
+  letter-spacing:-.015em; font-variant-numeric:tabular-nums; min-width:60px; text-align:right}
 .line.has .ln{border-bottom:1px solid transparent}
 .line.has:hover .ln{border-bottom-color:var(--faint)}
 
@@ -177,8 +178,8 @@ a{color:inherit; text-decoration:none}
 .sheet-head h3{font-family:var(--serif); font-weight:600; font-size:25px; line-height:1.16;
   margin:0; flex:1 1 auto; letter-spacing:-.01em; text-wrap:balance}
 .sheet-price{display:flex; gap:12px; flex:none}
-.sheet-price b{font-family:var(--serif); font-weight:900; font-size:23px; color:var(--gold);
-  font-variant-numeric:tabular-nums; white-space:nowrap}
+.sheet-price b{font-family:var(--num); font-weight:700; font-size:22px; color:var(--gold);
+  letter-spacing:-.015em; font-variant-numeric:tabular-nums; white-space:nowrap}
 .sheet p.lede{margin:0; font-size:16px; line-height:1.66; color:var(--ink)}
 .block{border-top:1px solid var(--line-soft); padding-top:16px}
 .block > .eyebrow{display:block; margin-bottom:11px; font-size:11.5px; color:var(--muted)}
@@ -356,7 +357,7 @@ const sheet=$("#sheet"), backdrop=$("#backdrop");
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 const nm=(it,l)=> it.n[l] || it.n.es;
 const desc=(it,l)=> it.d ? (it.d[l] || it.d.es) : null;
-const price=v=> v.toFixed(2).replace(".",",")+" €";
+const price=v=> v.toFixed(2).replace(".",",")+"\u20AC";
 const subIds=s=> s.groups.reduce((a,g)=>a.concat(g.ids),[]);
 const catIds=c=> c.kind==="dishes" ? c.ids : c.subs.reduce((a,s)=>a.concat(subIds(s)),[]);
 /* a trailing parenthesis is provenance, not part of the name — set it apart */
